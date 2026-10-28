@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Agenda de Contactos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        h1 {
+            color: #333;
+        }
+        .btn-nuevo {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        .btn-nuevo:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .mensaje-vacio {
+            padding: 15px;
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Título principal -->
+    <h1>Agenda de Contactos</h1>
+
+    <!-- Enlace para agregar un nuevo contacto -->
+    <a th:href="@{/nuevo}" class="btn-nuevo">Nuevo Contacto</a>
+
+    <!-- Mensaje cuando la lista está vacía usando th:if -->
+    <div th:if="${#lists.isEmpty(contactos)}" class="mensaje-vacio">
+        No hay contactos registrados en la agenda actualmente.
+    </div>
+
+    <!-- Tabla de contactos que se muestra usando th:unless cuando la lista NO está vacía -->
+    <div th:unless="${#lists.isEmpty(contactos)}">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Bucle th:each para recorrer la lista de contactos -->
+                <tr th:each="contacto : ${contactos}">
+                    <td th:text="${contacto.nombre}">Nombre</td>
+                    <td th:text="${contacto.apellido}">Apellido</td>
+                    <td th:text="${contacto.email}">Email</td>
+                    <td th:text="${contacto.telefono}">Teléfono</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
