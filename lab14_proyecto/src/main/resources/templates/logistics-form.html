@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario de Logística</title>
+    <style>
+        body  { font-family: Arial, sans-serif; background: #1a1a2e; color: #e0e0e0; display: flex; justify-content: center; margin-top: 60px; }
+        .caja { background: #16213e; padding: 40px; border-radius: 12px; border: 1px solid #4a90d9; width: 420px; }
+        h1    { color: #f0c040; text-align: center; margin-bottom: 24px; }
+        label { display: block; margin-bottom: 4px; color: #aaa; font-size: .9em; }
+        input, select { width: 100%; padding: 10px; margin-bottom: 16px; background: #0f3460; border: 1px solid #4a90d9; border-radius: 6px; color: #fff; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #4a90d9; border: none; border-radius: 6px; color: white; font-size: 1em; cursor: pointer; }
+        button:hover { background: #357abd; }
+        a     { display: block; text-align: center; margin-top: 16px; color: #4a90d9; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="caja">
+        <h1 th:text="${logistics.id} != null ? '✏️ Editar Registro' : '🚚 Nuevo Registro'">Logística</h1>
+
+        <form th:action="@{/logistics/guardar}" th:object="${logistics}" method="post">
+            <input type="hidden" th:field="*{id}" />
+
+            <label>Operador</label>
+            <input type="text" th:field="*{operador}" placeholder="Nombre del chofer" required />
+
+            <label>Origen</label>
+            <input type="text" th:field="*{origen}" placeholder="Ciudad de origen" required />
+
+            <label>Destino</label>
+            <input type="text" th:field="*{destino}" placeholder="Ciudad de destino" required />
+
+            <label>Tarifa ($)</label>
+            <input type="number" step="0.01" th:field="*{tarifa}" placeholder="0.00" required />
+
+            <label>Fecha de Viaje</label>
+            <input type="date" th:field="*{fechaViaje}" required />
+
+            <label>Estatus</label>
+            <select th:field="*{estatus}">
+                <option value="Pendiente">Pendiente</option>
+                <option value="Completado">Completado</option>
+                <option value="Cancelado">Cancelado</option>
+            </select>
+
+            <button type="submit">Guardar Registro</button>
+        </form>
+        <a href="/logistics">Cancelar</a>
+    </div>
+</body>
+</html>
